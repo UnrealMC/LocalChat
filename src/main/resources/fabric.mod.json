@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "localchat",
+  "version": "${version}",
+  "name": "LocalChat",
+  "description": "Transform your server text chat into a distance based one !",
+  "authors": [
+    "Unreal852"
+  ],
+  "contact": {
+    "repo": "https://github.com/Unreal852/LocalChat"
+  },
+  "license": "MIT",
+  "icon": "assets/LocalChat/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "fr.unreal852.localchat.LocalChat"
+    ],
+    "server": [
+      "fr.unreal852.localchat.server.LocalChatServer"
+    ]
+  },
+  "mixins": [
+    "LocalChat.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.8",
+    "fabric": "*",
+    "minecraft": "1.19"
+  }
+}
