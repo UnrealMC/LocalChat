@@ -22,7 +22,7 @@ public class LocalChatServer implements DedicatedServerModInitializer
             dispatcher.register(CommandManager.literal("shout").then(CommandManager.argument("message", StringArgumentType.greedyString()).executes(new ShoutCommand())));
             dispatcher.register(CommandManager.literal("lchat")
                     .then(CommandManager.literal("config")
-                    .then(CommandManager.literal("reload")).executes(new ReloadConfigCommand())));
+                    .then(CommandManager.literal("reload").executes(new ReloadConfigCommand()))));
         }));
 
         ServerMessageEvents.ALLOW_CHAT_MESSAGE.register(new ChatMessageListener());
