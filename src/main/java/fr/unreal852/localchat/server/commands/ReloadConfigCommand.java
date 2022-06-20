@@ -6,6 +6,9 @@ import fr.unreal852.localchat.LocalChat;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
+/**
+ * Represents the reload config command.
+ */
 public class ReloadConfigCommand implements Command<ServerCommandSource>
 {
 

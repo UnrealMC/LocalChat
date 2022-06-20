@@ -1,12 +1,12 @@
 package fr.unreal852.localchat.config;
 
-public class LocalChatGeneralConfig
+public class GeneralConfig
 {
     public final double chatRange;
     public final double whisperRange;
     public final int    rangeByPassPermissionLevel;
 
-    public LocalChatGeneralConfig(double chatRange, double whisperRange, int permissionLevelByPass)
+    public GeneralConfig(double chatRange, double whisperRange, int permissionLevelByPass)
     {
         this.chatRange = chatRange;
         this.whisperRange = whisperRange;

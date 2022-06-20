@@ -1,21 +1,25 @@
 package fr.unreal852.localchat.utils;
 
-import fr.unreal852.localchat.LocalChat;
-
 import java.util.Random;
 
 public final class StringConfuser
 {
-    public static String Confuse(String text, int percentAmount)
+    /**
+     * Confuse the specified text by changing random characters and replacing them with the given char.
+     *
+     * @param text          The text to confuse.
+     * @param percentAmount How much of the text have to be confused.
+     * @return The confused text.
+     */
+    public static String Confuse(String text, final int percentAmount, final char replaceChar)
     {
-        final char replaceChar = LocalChat.CONFIG.confuseMessages.character;
+        if (percentAmount <= 0 || text.length() <= 0)
+            return text;
         int amountToChange = text.length() * percentAmount / 100;
         char[] chars = text.toCharArray();
+        Random rdm = new Random();
         for (int i = 0; i < amountToChange; i++)
-        {
-            Random rdm = new Random();
             chars[rdm.nextInt(text.length())] = replaceChar;
-        }
         return new String(chars);
     }
 }

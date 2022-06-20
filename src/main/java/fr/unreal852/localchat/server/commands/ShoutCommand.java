@@ -12,9 +12,12 @@ import net.minecraft.text.Text;
 import java.time.Instant;
 import java.util.Optional;
 
+/**
+ * Represent the shout command.
+ * The shout command broadcast a message to the whole server, bypassing the distance.
+ */
 public class ShoutCommand implements Command<ServerCommandSource>
 {
-
     @Override
     public int run(CommandContext context)
     {
