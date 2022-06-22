@@ -33,27 +33,27 @@ public final class ChatManager
             return;
         }
         double distance = Math.sqrt(player.squaredDistanceTo(sender));
-        if (distance > LocalChat.CONFIG.general.chatRange && !player.hasPermissionLevel(LocalChat.CONFIG.general.rangeByPassPermissionLevel))
+        if (distance > LocalChat.CONFIG.general.range && !player.hasPermissionLevel(LocalChat.CONFIG.general.rangeByPassPermissionLevel))
             return;
-        if (!LocalChat.CONFIG.customMessagesFormat.enabled && !LocalChat.CONFIG.confuseMessages.enabled)
+        if (!LocalChat.CONFIG.customFormat.enabled && !LocalChat.CONFIG.confuse.enabled)
             player.sendChatMessage(message, messageSender, messageType);
         else
         {
             String messageContent = message.signedContent().getString();
             String senderName = sender.getDisplayName().getString();
-            if (LocalChat.CONFIG.confuseMessages.enabled)
+            if (LocalChat.CONFIG.confuse.enabled)
             {
-                double maxDistancePercent = distance * 100 / LocalChat.CONFIG.general.chatRange;
-                if (maxDistancePercent >= LocalChat.CONFIG.confuseMessages.distance && !player.hasPermissionLevel(LocalChat.CONFIG.general.rangeByPassPermissionLevel))
-                    messageContent = StringConfuser.Confuse(messageContent, (int) maxDistancePercent, LocalChat.CONFIG.confuseMessages.character);
+                double maxDistancePercent = distance * 100 / LocalChat.CONFIG.general.range;
+                if (maxDistancePercent >= LocalChat.CONFIG.confuse.range && !player.hasPermissionLevel(LocalChat.CONFIG.general.rangeByPassPermissionLevel))
+                    messageContent = StringConfuser.Confuse(messageContent, (int) maxDistancePercent, LocalChat.CONFIG.confuse.character);
             }
-            if (LocalChat.CONFIG.customMessagesFormat.enabled)
+            if (LocalChat.CONFIG.customFormat.enabled)
             {
                 Map<String, Object> map = StringSubstitutor.createNewMap();
                 map.put("distance", (int) distance);
                 map.put("sender", senderName);
                 map.put("message", messageContent);
-                messageContent = StringSubstitutor.replace(LocalChat.CONFIG.customMessagesFormat.format, map);
+                messageContent = StringSubstitutor.replace(LocalChat.CONFIG.customFormat.format, map);
             }
             else
                 messageContent = "<" + senderName + "> " + messageContent; // If we don't use custom format, we mimic the default minecraft format.

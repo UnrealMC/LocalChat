@@ -13,7 +13,7 @@ public final class StringConfuser
      */
     public static String Confuse(String text, final int percentAmount, final char replaceChar)
     {
-        if (percentAmount <= 0 || text.length() <= 0)
+        if (percentAmount <= 0 || text.isBlank())
             return text;
         int amountToChange = text.length() * percentAmount / 100;
         char[] chars = text.toCharArray();

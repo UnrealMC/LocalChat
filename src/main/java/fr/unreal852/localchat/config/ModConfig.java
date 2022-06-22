@@ -19,9 +19,9 @@ public class ModConfig
             .create();
 
     public final String         __Comment;
-    public final GeneralConfig  general;
-    public final ConfuseConfig  confuseMessages;
-    public final FormatConfig   customMessagesFormat;
+    public final GeneralConfig general;
+    public final ConfuseConfig  confuse;
+    public final FormatConfig   customFormat;
     public final CommandsConfig commands;
     public final ConfigVersion  version;
 
@@ -36,15 +36,15 @@ public class ModConfig
     }
 
     public ModConfig(GeneralConfig general,
-                     ConfuseConfig confuseMessages,
-                     FormatConfig customMessagesFormat,
+                     ConfuseConfig confuse,
+                     FormatConfig customFormat,
                      CommandsConfig commands,
                      ConfigVersion version)
     {
         __Comment = "This is the config file for the LocalChat mod.";
         this.general = general;
-        this.confuseMessages = confuseMessages;
-        this.customMessagesFormat = customMessagesFormat;
+        this.confuse = confuse;
+        this.customFormat = customFormat;
         this.commands = commands;
         this.version = version;
     }
