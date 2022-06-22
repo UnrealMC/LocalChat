@@ -43,9 +43,12 @@ public final class ChatManager
             String senderName = sender.getDisplayName().getString();
             if (LocalChat.CONFIG.confuse.enabled)
             {
-                double maxDistancePercent = distance * 100 / LocalChat.CONFIG.general.range;
-                if (maxDistancePercent >= LocalChat.CONFIG.confuse.range && !player.hasPermissionLevel(LocalChat.CONFIG.general.rangeByPassPermissionLevel))
-                    messageContent = StringConfuser.Confuse(messageContent, (int) maxDistancePercent, LocalChat.CONFIG.confuse.character);
+                if (distance >= LocalChat.CONFIG.confuse.range && !player.hasPermissionLevel(LocalChat.CONFIG.general.rangeByPassPermissionLevel))
+                {
+                    double confuseRange = LocalChat.CONFIG.general.range - LocalChat.CONFIG.confuse.range;
+                    double confuseDistancePercent = (distance - LocalChat.CONFIG.confuse.range) * 100 / confuseRange;
+                    messageContent = StringConfuser.Confuse(messageContent, (int) confuseDistancePercent, LocalChat.CONFIG.confuse.character);
+                }
             }
             if (LocalChat.CONFIG.customFormat.enabled)
             {
