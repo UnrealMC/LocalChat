@@ -1,119 +1,56 @@
 package fr.unreal852.localchat.config;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import fr.unreal852.localchat.LocalChat;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-// Todo: Use a config library or make my own using gson.
+import com.electronwill.nightconfig.core.conversion.Path;
+import com.electronwill.nightconfig.core.conversion.SpecIntInRange;
+import fr.unreal852.localchat.utils.ConfigUtils.Comment;
+import fr.unreal852.localchat.utils.ConfigUtils.Ignore;
 
 public class ModConfig
 {
-    private static final Gson GSON = new GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
-            .setPrettyPrinting()
-            .create();
+    @Ignore
+    public static final int CURRENT_VERSION = 1;
 
-    public final String         __Comment;
-    public final GeneralConfig general;
-    public final ConfuseConfig  confuse;
-    public final FormatConfig   customFormat;
-    public final CommandsConfig commands;
-    public final ConfigVersion  version;
+    @Path("General.ChatRange")
+    @Comment("The range in blocks a player can talk and be heard. | Type: Integer | Default: 50")
+    @SpecIntInRange(min = 0, max = 1000000)
+    public final int         chatRange                          = 50;
+    @Path("General.WhisperRange")
+    @Comment("The range in blocks a player can whisper and be whispered. | Type: Integer | Default: 5")
+    @SpecIntInRange(min = 0, max = 1000000)
+    public final int         whisperRange                       = 5;
+    @Path("General.RangeBypassPermissionLevel")
+    @Comment("The required permission level to see messages from any distance. | Type: Integer | Default: 4")
+    public final int         rangeByPassPermissionLevel         = 4;
+    @Path("Confuse.Enabled")
+    @Comment("Enable or disable message confusion. | Type: Boolean | Default: true")
+    public final boolean     confuseEnabled                     = true;
+    @Path("Confuse.Range")
+    @Comment("The range in blocks when a message start being confused. | Type: Integer | Default: 30")
+    public final int         confuseRange                       = 30;
+    @Path("Confuse.Mode")
+    @Comment("The confuser mode. | Type: Enum(ReplaceChars,RemoveChars) | Default: RemoveChars")
+    public final ConfuseMode confuseMode;
+    @Path("Confuse.Character")
+    @Comment("The character to use when confusing messages with mode ReplaceChars. | Type: String | Default: @")
+    public final String      confuseChar                        = "@";
+    @Path("CustomFormat.Enabled")
+    @Comment("Enable or disable custom message format. | Type: Boolean | Default: false")
+    public final boolean     customFormatEnabled                = false;
+    @Path("CustomFormat.Format")
+    @Comment("The message format to use when displaying messages. | Type: String | Default: [{distance}B] {sender} > {message}")
+    public final String      customFormatFormat                 = "[{distance}B] {sender} > {message}";
+    @Path("Commands.ReloadConfigPermissionLevel")
+    @Comment("The permission level required to use the reload config command. | Type: Integer | Default: 4")
+    public final int         commandReloadConfigPermissionLevel = 4;
+    @Path("Commands.ShoutPermissionLevel")
+    @Comment("The permission level required to use the shout command. | Type: Integer | Default: 4")
+    public final int         commandShoutPermissionLevel        = 4;
+    @Path("Version")
+    @Comment("DO NOT TOUCH!")
+    public final int         configVersion                      = CURRENT_VERSION;
 
     public ModConfig()
     {
-        this(
-                new GeneralConfig(50, 5, 1),
-                new ConfuseConfig(true, 40, '@'),
-                new FormatConfig(false, "[{distance}B] {sender} > {message}"),
-                new CommandsConfig(1, 1),
-                new ConfigVersion());
-    }
-
-    public ModConfig(GeneralConfig general,
-                     ConfuseConfig confuse,
-                     FormatConfig customFormat,
-                     CommandsConfig commands,
-                     ConfigVersion version)
-    {
-        __Comment = "This is the config file for the LocalChat mod.";
-        this.general = general;
-        this.confuse = confuse;
-        this.customFormat = customFormat;
-        this.commands = commands;
-        this.version = version;
-    }
-
-    /**
-     * Read config from file.
-     * If the file does not exist, a new config file is created and returned.
-     * If the file exist but can not be read, a new config file is created and returned.
-     * If the file exist but has a different version, the config file is re-written with the new format but the original changes are kept.
-     *
-     * @param file The config file to read.
-     * @return The config.
-     */
-    public static ModConfig readConfig(Path file)
-    {
-        try
-        {
-            if (!Files.exists(file))
-                return writeConfigAndReturn(file, new ModConfig());
-            ModConfig config = GSON.fromJson(Files.readString(file), ModConfig.class);
-            if (config == null)
-                return writeConfigAndReturn(file, new ModConfig());
-            if (config.version.getVersion() == 1)
-                return config;
-            return writeConfigAndReturn(file, config);
-        }
-        catch (IOException ex)
-        {
-            LocalChat.LOGGER.error("Failed to read config (" + file + ")", ex);
-            return new ModConfig();
-        }
-    }
-
-    /**
-     * Write config to file.
-     *
-     * @param file   The file to write the config to.
-     * @param config The config to write to file.
-     */
-    public static void writeConfig(Path file, ModConfig config)
-    {
-        if (config == null)
-        {
-            LocalChat.LOGGER.error("The provided LocalChatConfig is null");
-            return;
-        }
-        try
-        {
-            if (!Files.exists(file) && file.getParent() != null)
-                Files.createDirectories(file.getParent());
-            config.version.setVersion(ConfigVersion.CURRENT_CONFIG_VERSION);
-            Files.writeString(file, GSON.toJson(config));
-        }
-        catch (IOException ex)
-        {
-            LocalChat.LOGGER.error("Failed to write config", ex);
-        }
-    }
-
-    /**
-     * Write config to file and return it.
-     *
-     * @param file   The file to write the config to.
-     * @param config The config to write to file.
-     * @return The config.
-     */
-    public static ModConfig writeConfigAndReturn(Path file, ModConfig config)
-    {
-        writeConfig(file, config);
-        return config;
+        this.confuseMode = ConfuseMode.RemoveChars;
     }
 }

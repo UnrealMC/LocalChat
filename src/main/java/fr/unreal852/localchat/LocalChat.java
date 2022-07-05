@@ -1,6 +1,7 @@
 package fr.unreal852.localchat;
 
 import fr.unreal852.localchat.config.ModConfig;
+import fr.unreal852.localchat.utils.ConfigUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
@@ -20,7 +21,7 @@ public class LocalChat implements ModInitializer
     public static void LoadConfig()
     {
         Path configFile = FabricLoader.getInstance().getConfigDir().resolve(CONFIG_FILE);
-        CONFIG = ModConfig.readConfig(configFile);
+        CONFIG = ConfigUtils.loadConfig(ModConfig.class, configFile);
     }
 
     @Override
