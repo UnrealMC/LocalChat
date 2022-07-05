@@ -4,7 +4,6 @@ import fr.unreal852.localchat.LocalChat;
 import net.minecraft.network.packet.c2s.play.CommandExecutionC2SPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,7 +35,7 @@ public class CommandExecutionMixin
                 return;
             }
             double distance = Math.sqrt(target.squaredDistanceTo(player));
-            if (distance > LocalChat.CONFIG.general.whisperRange && !player.hasPermissionLevel(LocalChat.CONFIG.general.rangeByPassPermissionLevel))
+            if (distance > LocalChat.CONFIG.whisperRange && !player.hasPermissionLevel(LocalChat.CONFIG.rangeByPassPermissionLevel))
                 ci.cancel();
         }
     }

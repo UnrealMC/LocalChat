@@ -11,7 +11,7 @@ public class ModConfig
     public static final int CURRENT_VERSION = 1;
 
     @Path("General.ChatRange")
-    @Comment("The range in blocks a player can talk and be heard. | Type: Integer | Default: 50")
+    @Comment("The range in blocks a player can talk and be heard. \n| Type: Integer | Default: 50")
     @SpecIntInRange(min = 0, max = 1000000)
     public final int         chatRange                          = 50;
     @Path("General.WhisperRange")
@@ -31,8 +31,8 @@ public class ModConfig
     @Comment("The confuser mode. | Type: Enum(ReplaceChars,RemoveChars) | Default: RemoveChars")
     public final ConfuseMode confuseMode;
     @Path("Confuse.Character")
-    @Comment("The character to use when confusing messages with mode ReplaceChars. | Type: String | Default: @")
-    public final String      confuseChar                        = "@";
+    @Comment("The characters to use when confusing messages with mode ReplaceChars. | Type: String | Default: @#$")
+    public final String      confuseCharacters                  = "@#$";
     @Path("CustomFormat.Enabled")
     @Comment("Enable or disable custom message format. | Type: Boolean | Default: false")
     public final boolean     customFormatEnabled                = false;
@@ -51,6 +51,6 @@ public class ModConfig
 
     public ModConfig()
     {
-        this.confuseMode = ConfuseMode.RemoveChars;
+        this.confuseMode = ConfuseMode.DeleteCharacters;
     }
 }
