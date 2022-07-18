@@ -15,21 +15,23 @@ import java.util.List;
 
 public class ChatMessageListener implements ServerMessageEvents.AllowChatMessage
 {
+
     @Override
     public boolean allowChatMessage(FilteredMessage<SignedMessage> message, ServerPlayerEntity sender, RegistryKey<MessageType> typeKey)
     {
+        if (ChatManager.GlobalChatEnabled)
+            return true;
         MinecraftServer server = sender.getServer();
         if (server == null)
             return false;
         List<ServerPlayerEntity> players = sender.getWorld().getPlayers();
         MessageSender messageSender = new MessageSender(sender.getUuid(), sender.getDisplayName());
         SignedMessage signedMessage = message.filteredOrElse(message.raw());
-        
+
         server.sendMessage(Text.literal("<" + messageSender.name().getString() + "> ").append(signedMessage.signedContent()));
 
         for (ServerPlayerEntity player : players)
             ChatManager.sendMessage(player, sender, messageSender, signedMessage, typeKey);
-
         return false;
     }
 }

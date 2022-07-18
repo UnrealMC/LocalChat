@@ -16,6 +16,8 @@ import java.util.Map;
 
 public final class ChatManager
 {
+    public static boolean GlobalChatEnabled = false;
+
     /**
      * Send a chat message to the specified player only if they are within the configured distance.
      *
@@ -25,6 +27,7 @@ public final class ChatManager
      * @param message       The message.
      * @param messageType   The message type.
      */
+
     public static void sendMessage(ServerPlayerEntity player, ServerPlayerEntity sender, MessageSender messageSender, SignedMessage message, RegistryKey<MessageType> messageType)
     {
         if (player == sender)

@@ -1,6 +1,8 @@
 package fr.unreal852.localchat.server;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
+import fr.unreal852.localchat.server.commands.EnableDistanceCommand;
+import fr.unreal852.localchat.server.commands.DisableDistanceCommand;
 import fr.unreal852.localchat.server.commands.ReloadConfigCommand;
 import fr.unreal852.localchat.server.commands.ShoutCommand;
 import fr.unreal852.localchat.server.listeners.ChatMessageListener;
@@ -23,6 +25,8 @@ public class LocalChatServer implements DedicatedServerModInitializer
             dispatcher.register(CommandManager.literal("lchat")
                     .then(CommandManager.literal("config")
                     .then(CommandManager.literal("reload").executes(new ReloadConfigCommand()))));
+            dispatcher.register(CommandManager.literal("lchat").then(CommandManager.literal("enable").executes(new EnableDistanceCommand())));
+            dispatcher.register(CommandManager.literal("lchat").then(CommandManager.literal("disable").executes(new DisableDistanceCommand())));
         }));
 
         ServerMessageEvents.ALLOW_CHAT_MESSAGE.register(new ChatMessageListener());
