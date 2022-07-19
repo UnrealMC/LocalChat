@@ -20,6 +20,7 @@ public class ReloadConfigCommand implements Command<ServerCommandSource>
             if (!source.hasPermissionLevel(LocalChat.CONFIG.commandReloadConfigPermissionLevel))
                 return 0;
             LocalChat.LoadConfig();
+           // source.sendFeedback(Text.literal("Config Reloaded"), true);
             if (source.getPlayer() != null)
                 source.getPlayer().sendMessage(Text.literal("Config Reloaded"), false);
             return Command.SINGLE_SUCCESS;
