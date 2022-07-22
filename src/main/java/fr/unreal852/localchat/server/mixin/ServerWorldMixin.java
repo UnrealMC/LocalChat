@@ -18,7 +18,7 @@ public class ServerWorldMixin implements IWorldTickSchedulerAccess
     @Unique
     private final ArrayList<SchedulerRunnable> _schedulers = new ArrayList<>();
 
-    @Inject(method = "tick", at = @At("TAIL"))
+    @Inject(at = @At("TAIL"), method = "tick")
     private void onTick(CallbackInfo ci)
     {
         if (_schedulers.size() == 0)

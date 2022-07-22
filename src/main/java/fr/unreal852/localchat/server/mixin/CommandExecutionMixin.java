@@ -16,7 +16,7 @@ public class CommandExecutionMixin
     @Shadow
     public ServerPlayerEntity player;
 
-    @Inject(at = @At(value = "HEAD"), method = "onCommandExecution", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "onCommandExecution", cancellable = true)
     private void onCommandExecution(CommandExecutionC2SPacket packet, CallbackInfo ci)
     {
         // Todo: The sender should always see his message, right now we just cancel the command and the sender doesn't see anything.
