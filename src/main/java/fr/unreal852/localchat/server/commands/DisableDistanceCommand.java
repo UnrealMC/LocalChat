@@ -15,7 +15,7 @@ public class DisableDistanceCommand implements Command<ServerCommandSource>
     {
         if (context.getSource() instanceof ServerCommandSource source)
         {
-            if (!source.hasPermissionLevel(LocalChat.CONFIG.enableDisableDistanceCommandPermissionLevel))
+            if (!source.hasPermissionLevel(LocalChat.getConfig().enableDisableDistanceCommandPermissionLevel))
                 return 0;
             ServerWorld serverWorld = source.getWorld();
             if (!(serverWorld instanceof IWorldTickSchedulerAccess schedulerAccess))

@@ -13,7 +13,7 @@ public class EnableDistanceCommand implements Command<ServerCommandSource>
     {
         if (context.getSource() instanceof ServerCommandSource source)
         {
-            if (!source.hasPermissionLevel(LocalChat.CONFIG.enableDisableDistanceCommandPermissionLevel))
+            if (!source.hasPermissionLevel(LocalChat.getConfig().enableDisableDistanceCommandPermissionLevel))
                 return 0;
             ChatManager.GlobalChatEnabled = false;
             return Command.SINGLE_SUCCESS;

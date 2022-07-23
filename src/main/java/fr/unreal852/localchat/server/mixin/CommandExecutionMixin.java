@@ -1,6 +1,7 @@
 package fr.unreal852.localchat.server.mixin;
 
 import fr.unreal852.localchat.LocalChat;
+import fr.unreal852.localchat.config.ModConfig;
 import net.minecraft.network.packet.c2s.play.CommandExecutionC2SPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -34,8 +35,9 @@ public class CommandExecutionMixin
                 ci.cancel(); // Should not be needed.
                 return;
             }
+            ModConfig config = LocalChat.getConfig();
             double distance = Math.sqrt(target.squaredDistanceTo(player));
-            if (distance > LocalChat.CONFIG.whisperRange && !player.hasPermissionLevel(LocalChat.CONFIG.rangeByPassPermissionLevel))
+            if (distance > config.whisperRange && !player.hasPermissionLevel(config.rangeByPassPermissionLevel))
                 ci.cancel();
         }
     }

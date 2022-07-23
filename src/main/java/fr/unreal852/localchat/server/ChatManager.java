@@ -1,6 +1,7 @@
 package fr.unreal852.localchat.server;
 
 import fr.unreal852.localchat.LocalChat;
+import fr.unreal852.localchat.config.ModConfig;
 import fr.unreal852.localchat.utils.StringConfuser;
 import fr.unreal852.localchat.utils.StringSubstitutor;
 import net.minecraft.network.message.MessageSender;
@@ -35,39 +36,40 @@ public final class ChatManager
             player.sendChatMessage(message, messageSender, messageType);
             return;
         }
+        ModConfig config = LocalChat.getConfig();
         double distance = Math.sqrt(player.squaredDistanceTo(sender));
-        if (distance > LocalChat.CONFIG.chatRange && !player.hasPermissionLevel(LocalChat.CONFIG.rangeByPassPermissionLevel))
+        if (distance > config.chatRange && !player.hasPermissionLevel(config.rangeByPassPermissionLevel))
             return;
-        if (!LocalChat.CONFIG.customFormatEnabled && !LocalChat.CONFIG.confuseEnabled)
+        if (!config.customFormatEnabled && !config.confuseEnabled)
             player.sendChatMessage(message, messageSender, messageType);
         else
         {
             String messageContent = message.signedContent().getString();
             String senderName = sender.getDisplayName().getString();
-            if (LocalChat.CONFIG.confuseEnabled)
+            if (config.confuseEnabled)
             {
-                if (distance >= LocalChat.CONFIG.confuseRange && !player.hasPermissionLevel(LocalChat.CONFIG.rangeByPassPermissionLevel))
+                if (distance >= config.confuseRange && !player.hasPermissionLevel(config.rangeByPassPermissionLevel))
                 {
-                    double confuseRange = LocalChat.CONFIG.chatRange - LocalChat.CONFIG.confuseRange;
-                    double confuseDistancePercent = (distance - LocalChat.CONFIG.confuseRange) * 100 / confuseRange;
-                    switch (LocalChat.CONFIG.confuseMode)
+                    double confuseRange = config.chatRange - config.confuseRange;
+                    double confuseDistancePercent = (distance - config.confuseRange) * 100 / confuseRange;
+                    switch (config.confuseMode)
                     {
                         case DeleteCharacters ->
                                 messageContent = StringConfuser.ConfuseRemove(messageContent, (int) confuseDistancePercent);
                         case ReplaceCharacters ->
-                                messageContent = StringConfuser.ConfuseReplace(messageContent, (int) confuseDistancePercent, LocalChat.CONFIG.confuseCharacters);
+                                messageContent = StringConfuser.ConfuseReplace(messageContent, (int) confuseDistancePercent, config.confuseCharacters);
                         case ShuffleCharacters ->
                                 messageContent = StringConfuser.ConfuseShuffle(messageContent, (int) confuseDistancePercent);
                     }
                 }
             }
-            if (LocalChat.CONFIG.customFormatEnabled)
+            if (config.customFormatEnabled)
             {
                 Map<String, Object> map = StringSubstitutor.createNewMap();
                 map.put("distance", (int) distance);
                 map.put("sender", senderName);
                 map.put("message", messageContent);
-                messageContent = StringSubstitutor.replace(LocalChat.CONFIG.customFormatFormat, map);
+                messageContent = StringSubstitutor.replace(config.customFormatFormat, map);
             }
             else
                 messageContent = "<" + senderName + "> " + messageContent; // If we don't use custom format, we mimic the default minecraft format.

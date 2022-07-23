@@ -24,7 +24,7 @@ public class ShoutCommand implements Command<ServerCommandSource>
     {
         if (context.getSource() instanceof ServerCommandSource source)
         {
-            if (!source.hasPermissionLevel(LocalChat.CONFIG.commandShoutPermissionLevel))
+            if (!source.hasPermissionLevel(LocalChat.getConfig().commandShoutPermissionLevel))
                 return 0;
             String message = StringArgumentType.getString(context, "message");
             Text messageText = Text.literal(message);
