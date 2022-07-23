@@ -5,15 +5,20 @@ import fr.unreal852.localchat.config.ModConfig;
 import fr.unreal852.localchat.utils.StringConfuser;
 import fr.unreal852.localchat.utils.StringSubstitutor;
 import net.minecraft.network.message.MessageSender;
+import net.minecraft.network.message.MessageSignature;
 import net.minecraft.network.message.MessageType;
 import net.minecraft.network.message.SignedMessage;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.registry.RegistryKey;
 
+import java.time.Instant;
 import java.util.Map;
+import java.util.Optional;
 
 public final class ChatManager
 {
@@ -77,5 +82,12 @@ public final class ChatManager
             Text messageText = Text.literal(messageContent).setStyle(Style.EMPTY.withClickEvent(messageClickEvent));
             player.sendMessage(messageText);
         }
+    }
+
+    public static void broadCastMessage(String message, MessageSender sender, MinecraftServer server) {
+        Text messageText = Text.literal(message);
+        MessageSignature messageSignature = new MessageSignature(sender.uuid(), Instant.now(), MessageSignature.none().saltSignature());
+        SignedMessage signedMessage = new SignedMessage(messageText, messageSignature, Optional.empty());
+        server.getPlayerManager().broadcast(signedMessage, sender, MessageType.CHAT);
     }
 }
