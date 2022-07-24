@@ -5,14 +5,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import fr.unreal852.localchat.LocalChat;
 import fr.unreal852.localchat.server.ChatManager;
-import net.minecraft.network.message.MessageSignature;
-import net.minecraft.network.message.MessageType;
-import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
-
-import java.time.Instant;
-import java.util.Optional;
 
 /**
  * Represent the shout command.
@@ -27,8 +20,7 @@ public class ShoutCommand implements Command<ServerCommandSource>
         {
             if (!source.hasPermissionLevel(LocalChat.getConfig().commandShoutPermissionLevel))
                 return 0;
-            String message = StringArgumentType.getString(context, "message");
-            ChatManager.broadCastMessage(message, source.getChatMessageSender(), source.getServer());
+            ChatManager.broadCastMessage(source.getServer(), source.getChatMessageSender(), StringArgumentType.getString(context, "message"));
             return Command.SINGLE_SUCCESS;
         }
         return 0;

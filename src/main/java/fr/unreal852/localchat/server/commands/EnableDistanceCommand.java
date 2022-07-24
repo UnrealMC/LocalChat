@@ -4,8 +4,8 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import fr.unreal852.localchat.LocalChat;
 import fr.unreal852.localchat.server.ChatManager;
+import fr.unreal852.localchat.server.ChatTextColor;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
 
 public class EnableDistanceCommand implements Command<ServerCommandSource>
 {
@@ -18,11 +18,11 @@ public class EnableDistanceCommand implements Command<ServerCommandSource>
                 return 0;
             if (!ChatManager.GlobalChatEnabled)
             {
-                source.sendFeedback(Text.literal("Global chat is already disabled !"), false);
+                ChatManager.sendFeedback(source, "Global chat is already disabled !", ChatTextColor.Orange, false);
                 return 0;
             }
             ChatManager.GlobalChatEnabled = false;
-            ChatManager.broadCastMessage("Global chat disabled !", source.getChatMessageSender(), source.getServer());
+            ChatManager.broadCastMessage(source.getServer(), source.getChatMessageSender(), "Global chat disabled !", ChatTextColor.Red);
             return Command.SINGLE_SUCCESS;
         }
         return 0;

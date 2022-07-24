@@ -11,9 +11,7 @@ import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.ClickEvent;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
+import net.minecraft.text.*;
 import net.minecraft.util.registry.RegistryKey;
 
 import java.time.Instant;
@@ -84,10 +82,36 @@ public final class ChatManager
         }
     }
 
-    public static void broadCastMessage(String message, MessageSender sender, MinecraftServer server) {
-        Text messageText = Text.literal(message);
-        MessageSignature messageSignature = new MessageSignature(sender.uuid(), Instant.now(), MessageSignature.none().saltSignature());
+    public static void broadCastMessage(MinecraftServer server, MessageSender messageSender, String message)
+    {
+        broadCastMessage(server, messageSender, message, ChatTextColor.White.getColor());
+    }
+
+    public static void broadCastMessage(MinecraftServer server, MessageSender messageSender, String message, ChatTextColor messageColor)
+    {
+        broadCastMessage(server, messageSender, message, messageColor.getColor());
+    }
+
+    public static void broadCastMessage(MinecraftServer server, MessageSender messageSender, String message, TextColor messageColor)
+    {
+        MutableText messageText = Text.literal(message);
+        Style style = messageText.getStyle().withColor(messageColor);
+        messageText.fillStyle(style);
+        MessageSignature messageSignature = new MessageSignature(messageSender.uuid(), Instant.now(), MessageSignature.none().saltSignature());
         SignedMessage signedMessage = new SignedMessage(messageText, messageSignature, Optional.empty());
-        server.getPlayerManager().broadcast(signedMessage, sender, MessageType.CHAT);
+        server.getPlayerManager().broadcast(signedMessage, messageSender, MessageType.CHAT);
+    }
+
+    public static void sendFeedback(ServerCommandSource serverCommandSource, String message, ChatTextColor messageColor, boolean broadcastToOps)
+    {
+        sendFeedback(serverCommandSource, message, messageColor.getColor(), broadcastToOps);
+    }
+
+    public static void sendFeedback(ServerCommandSource serverCommandSource, String message, TextColor messageColor, boolean broadcastToOps)
+    {
+        MutableText messageText = Text.literal(message);
+        Style style = messageText.getStyle().withColor(messageColor);
+        messageText.fillStyle(style);
+        serverCommandSource.sendFeedback(messageText, broadcastToOps);
     }
 }
