@@ -1,4 +1,4 @@
-package fr.unreal852.localchat.config;
+package fr.unreal852.proximitytextchat.config;
 
 import fr.unreal852.simpleconfig.attributes.ConfigComment;
 import fr.unreal852.simpleconfig.attributes.ConfigIgnore;

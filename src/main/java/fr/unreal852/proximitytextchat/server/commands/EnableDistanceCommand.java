@@ -1,10 +1,10 @@
-package fr.unreal852.localchat.server.commands;
+package fr.unreal852.proximitytextchat.server.commands;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
-import fr.unreal852.localchat.LocalChat;
-import fr.unreal852.localchat.server.ChatManager;
-import fr.unreal852.localchat.server.ChatTextColor;
+import fr.unreal852.proximitytextchat.ProximityTextChat;
+import fr.unreal852.proximitytextchat.server.ChatManager;
+import fr.unreal852.proximitytextchat.server.ChatTextColor;
 import net.minecraft.server.command.ServerCommandSource;
 
 public class EnableDistanceCommand implements Command<ServerCommandSource>
@@ -14,7 +14,7 @@ public class EnableDistanceCommand implements Command<ServerCommandSource>
     {
         if (context.getSource() instanceof ServerCommandSource source)
         {
-            if (!source.hasPermissionLevel(LocalChat.getConfig().enableDisableDistanceCommandPermissionLevel))
+            if (!source.hasPermissionLevel(ProximityTextChat.getConfig().enableDisableDistanceCommandPermissionLevel))
                 return 0;
             if (!ChatManager.GlobalChatEnabled)
             {
@@ -22,7 +22,7 @@ public class EnableDistanceCommand implements Command<ServerCommandSource>
                 return 0;
             }
             ChatManager.GlobalChatEnabled = false;
-            ChatManager.broadCastMessage(source.getServer(), source.getChatMessageSender(), "Global chat disabled !", ChatTextColor.Red);
+            ChatManager.broadCastMessage(source.getServer(), source, "Global chat disabled !", ChatTextColor.Red);
             return Command.SINGLE_SUCCESS;
         }
         return 0;

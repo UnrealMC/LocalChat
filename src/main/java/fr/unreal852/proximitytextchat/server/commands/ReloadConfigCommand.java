@@ -1,10 +1,10 @@
-package fr.unreal852.localchat.server.commands;
+package fr.unreal852.proximitytextchat.server.commands;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
-import fr.unreal852.localchat.LocalChat;
-import fr.unreal852.localchat.server.ChatManager;
-import fr.unreal852.localchat.server.ChatTextColor;
+import fr.unreal852.proximitytextchat.ProximityTextChat;
+import fr.unreal852.proximitytextchat.server.ChatManager;
+import fr.unreal852.proximitytextchat.server.ChatTextColor;
 import net.minecraft.server.command.ServerCommandSource;
 
 /**
@@ -18,9 +18,9 @@ public class ReloadConfigCommand implements Command<ServerCommandSource>
     {
         if (context.getSource() instanceof ServerCommandSource source)
         {
-            if (!source.hasPermissionLevel(LocalChat.getConfig().commandReloadConfigPermissionLevel))
+            if (!source.hasPermissionLevel(ProximityTextChat.getConfig().commandReloadConfigPermissionLevel))
                 return 0;
-            LocalChat.LoadConfig();
+            ProximityTextChat.LoadConfig();
             ChatManager.sendFeedback(source, "Configuration reloaded !", ChatTextColor.Green, false);
             return Command.SINGLE_SUCCESS;
         }

@@ -1,11 +1,11 @@
-package fr.unreal852.localchat.server;
+package fr.unreal852.proximitytextchat.server;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
-import fr.unreal852.localchat.server.commands.EnableDistanceCommand;
-import fr.unreal852.localchat.server.commands.DisableDistanceCommand;
-import fr.unreal852.localchat.server.commands.ReloadConfigCommand;
-import fr.unreal852.localchat.server.commands.ShoutCommand;
-import fr.unreal852.localchat.server.listeners.ChatMessageListener;
+import fr.unreal852.proximitytextchat.server.commands.DisableDistanceCommand;
+import fr.unreal852.proximitytextchat.server.commands.EnableDistanceCommand;
+import fr.unreal852.proximitytextchat.server.commands.ReloadConfigCommand;
+import fr.unreal852.proximitytextchat.server.commands.ShoutCommand;
+import fr.unreal852.proximitytextchat.server.listeners.ChatMessageListener;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -14,7 +14,7 @@ import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import net.minecraft.server.command.CommandManager;
 
 @Environment(EnvType.SERVER)
-public class LocalChatServer implements DedicatedServerModInitializer
+public class ProximityTextChatServer implements DedicatedServerModInitializer
 {
     @Override
     public void onInitializeServer()
@@ -24,7 +24,7 @@ public class LocalChatServer implements DedicatedServerModInitializer
             dispatcher.register(CommandManager.literal("shout").then(CommandManager.argument("message", StringArgumentType.greedyString()).executes(new ShoutCommand())));
             dispatcher.register(CommandManager.literal("lchat")
                     .then(CommandManager.literal("config")
-                    .then(CommandManager.literal("reload").executes(new ReloadConfigCommand()))));
+                            .then(CommandManager.literal("reload").executes(new ReloadConfigCommand()))));
             dispatcher.register(CommandManager.literal("lchat").then(CommandManager.literal("enable").executes(new EnableDistanceCommand())));
             dispatcher.register(CommandManager.literal("lchat").then(CommandManager.literal("disable").executes(new DisableDistanceCommand())));
         }));

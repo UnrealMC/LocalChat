@@ -1,6 +1,6 @@
-package fr.unreal852.localchat;
+package fr.unreal852.proximitytextchat;
 
-import fr.unreal852.localchat.config.ModConfig;
+import fr.unreal852.proximitytextchat.config.ModConfig;
 import fr.unreal852.simpleconfig.configuration.Configomator;
 import fr.unreal852.simpleconfig.configuration.impl.ObjectConfig;
 import net.fabricmc.api.ModInitializer;
@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Path;
 
-public class LocalChat implements ModInitializer
+public class ProximityTextChat implements ModInitializer
 {
     public static final  Logger                  LOGGER        = LogManager.getLogger();
     private static final String                  CONFIG_FILE   = "localchat.toml";

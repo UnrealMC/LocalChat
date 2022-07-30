@@ -1,10 +1,10 @@
-package fr.unreal852.localchat.server.commands;
+package fr.unreal852.proximitytextchat.server.commands;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import fr.unreal852.localchat.LocalChat;
-import fr.unreal852.localchat.server.ChatManager;
+import fr.unreal852.proximitytextchat.ProximityTextChat;
+import fr.unreal852.proximitytextchat.server.ChatManager;
 import net.minecraft.server.command.ServerCommandSource;
 
 /**
@@ -18,9 +18,10 @@ public class ShoutCommand implements Command<ServerCommandSource>
     {
         if (context.getSource() instanceof ServerCommandSource source)
         {
-            if (!source.hasPermissionLevel(LocalChat.getConfig().commandShoutPermissionLevel))
+            if (!source.hasPermissionLevel(ProximityTextChat.getConfig().commandShoutPermissionLevel))
                 return 0;
-            ChatManager.broadCastMessage(source.getServer(), source.getChatMessageSender(), StringArgumentType.getString(context, "message"));
+            String stringMessage = StringArgumentType.getString(context, "message");
+            ChatManager.broadCastMessage(source.getServer(), source, stringMessage);
             return Command.SINGLE_SUCCESS;
         }
         return 0;

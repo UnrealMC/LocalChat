@@ -1,33 +1,33 @@
 {
   "schemaVersion": 1,
-  "id": "localchat",
+  "id": "proximitytextchat",
   "version": "${version}",
-  "name": "LocalChat",
+  "name": "ProximityTextChat",
   "description": "Transform your server text chat into a distance based one !",
   "authors": [
     "Unreal852"
   ],
   "contact": {
-    "repo": "https://github.com/Unreal852/LocalChat"
+    "repo": "https://github.com/Unreal852/ProximityTextChat"
   },
   "license": "MIT",
   "icon": "assets/LocalChat/icon.png",
   "environment": "server",
   "entrypoints": {
     "main": [
-      "fr.unreal852.localchat.LocalChat"
+      "fr.unreal852.proximitytextchat.ProximityTextChat"
     ],
     "server": [
-      "fr.unreal852.localchat.server.LocalChatServer"
+      "fr.unreal852.proximitytextchat.server.ProximityTextChatServer"
     ]
   },
   "mixins": [
-    "LocalChat.mixins.json"
+    "ProximityTextChat.mixins.json"
   ],
   "depends": {
     "simpleconfig": ">=1.0.2",
     "fabricloader": ">=0.14.8",
     "fabric": "*",
-    "minecraft": "1.19"
+    "minecraft": "1.19.1"
   }
 }

@@ -1,4 +1,4 @@
-package fr.unreal852.localchat.server.runnables;
+package fr.unreal852.proximitytextchat.server.runnables;
 
 public interface IWorldTickSchedulerAccess
 {

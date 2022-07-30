@@ -1,7 +1,7 @@
-package fr.unreal852.localchat.server.mixin;
+package fr.unreal852.proximitytextchat.server.mixin;
 
-import fr.unreal852.localchat.server.runnables.IWorldTickSchedulerAccess;
-import fr.unreal852.localchat.server.runnables.SchedulerRunnable;
+import fr.unreal852.proximitytextchat.server.runnables.IWorldTickSchedulerAccess;
+import fr.unreal852.proximitytextchat.server.runnables.SchedulerRunnable;
 import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

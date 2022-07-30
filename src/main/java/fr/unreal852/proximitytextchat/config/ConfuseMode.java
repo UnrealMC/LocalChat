@@ -1,4 +1,4 @@
-package fr.unreal852.localchat.config;
+package fr.unreal852.proximitytextchat.config;
 
 public enum ConfuseMode
 {

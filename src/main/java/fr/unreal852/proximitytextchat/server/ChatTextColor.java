@@ -1,4 +1,4 @@
-package fr.unreal852.localchat.server;
+package fr.unreal852.proximitytextchat.server;
 
 import net.minecraft.text.TextColor;
 

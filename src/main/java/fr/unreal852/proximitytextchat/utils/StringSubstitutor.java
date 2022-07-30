@@ -1,4 +1,4 @@
-package fr.unreal852.localchat.utils;
+package fr.unreal852.proximitytextchat.utils;
 
 import java.util.HashMap;
 import java.util.Map;
